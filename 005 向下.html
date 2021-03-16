@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    img {
+      vertical-align: middle;
+    }
+    .box {
+      width: 200px;
+      height: 300px;
+      border:10px solid;
+      margin: 0 auto;
+      position: relative;
+      /*overflow: hidden;*/
+    }
+    .box .imgs {
+      display: flex;
+      flex-direction: column-reverse;
+      position: absolute;
+      right: 0;
+
+    }
+  </style>
+</head>
+<body>
+  <div id="box1" class="box">
+    <ul class="imgs" style="bottom:0px;">
+      <li><img src="imgs/1.jpg" alt="1"></li>
+      <li><img src="imgs/2.jpg" alt="2"></li>
+      <li><img src="imgs/3.jpg" alt="3"></li>
+      <li><img src="imgs/4.jpg" alt="4"></li>
+      <li><img src="imgs/5.jpg" alt="5"></li>
+      <li><img src="imgs/6.jpg" alt="6"></li>
+    </ul>
+  </div>
+  <div class="box2"></div>
+  <script>
+    var box=document.getElementById('box1');
+    var imgs=box.getElementsByClassName('imgs')[0];
+      var bottom1=parseInt(imgs.style.bottom);//bottom值并转换为数字值
+    // var img=imgs.getElementByTagName('img');
+    // var imgN=img.length;//图片数量
+    var imgN=6;//图片数量
+    var imgW=100;//单张图片的宽度值
+    var imgL=imgN*imgW;//所有图片的宽度总和，即一份内容的宽度
+    var t=null;
+    var step=10;//时间间隔毫秒为单位
+    function move(){
+      if(bottom1==-imgL){//边界判断如果已经完播放第一份内容
+        bottom1+=imgL;//将内容回到到初始位置
+      }
+      imgs.style.bottom=--bottom1+'px';//设置新的left的值，让内容向左移动1像素
+    }
+    imgs.innerHTML+=imgs.innerHTML;//将内容区域复制一份
+    imgs.onmouseover=function(){//鼠标滑过内容区域停止内容容移动
+      clearInterval(t);//停止内容的移动
+      }
+    imgs.onmouseout=function(){//鼠标离开内容区域时
+        t=setInterval(move,step);//设置定时器，自动内容
+    }
+    imgs.onmouseout();//自动执行一次鼠标离开内容操作，出发鼠标离开事件
+  </script>
+</body>
+</html>
